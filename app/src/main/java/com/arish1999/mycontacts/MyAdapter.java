@@ -1,6 +1,8 @@
 package com.arish1999.mycontacts;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,10 +50,22 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.myviewHolder> {
                 dbManager db = new dbManager(context);
                 db.deleteData(modelArrayList.get(position).getName());
                 notifyItemRemoved(position);
+                modelArrayList.remove(position);
                 Toast.makeText(context,"Contact deleted",Toast.LENGTH_LONG).show();
+
 
             }
         });
+
+        holder.call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+modelArrayList.get(position).getContact()));
+                v.getContext().startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -61,7 +75,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.myviewHolder> {
 
     class myviewHolder extends RecyclerView.ViewHolder{
         TextView dname,dcontact,demail;
-        Button delete;
+        Button delete,call;
 
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +83,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.myviewHolder> {
             dcontact = itemView.findViewById(R.id.displaycontact);
             demail = itemView.findViewById(R.id.displayemail);
             delete = itemView.findViewById(R.id.deleteButton);
+            call = itemView.findViewById(R.id.callButton);
 
         }
     }
