@@ -18,6 +18,8 @@ public class fetchData extends AppCompatActivity {
     ArrayList<model> modelArrayList;
     Context context;
 
+    Button delB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,8 @@ public class fetchData extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         context = getApplicationContext();
         modelArrayList = new ArrayList<>();
+        delB = findViewById(R.id.deleteButton);
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         Cursor cursor = new dbManager(this).readAlldata();
@@ -38,6 +42,11 @@ public class fetchData extends AppCompatActivity {
 
        MyAdapter myAdapter = new MyAdapter(modelArrayList,getApplicationContext());
         recyclerView.setAdapter(myAdapter);
+
+
+
+
+
 
 
 

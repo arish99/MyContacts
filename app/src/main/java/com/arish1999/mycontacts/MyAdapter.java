@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,8 +20,11 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.myviewHolder> {
 
 
 
+
     public MyAdapter(ArrayList<model> modelArrayList, Context context) {
         this.modelArrayList = modelArrayList;
+
+        this.context = context;
 
 
     }
@@ -38,8 +42,16 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.myviewHolder> {
         holder.dname.setText(modelArrayList.get(position).getName());
         holder.dcontact.setText(modelArrayList.get(position).getContact());
         holder.demail.setText(modelArrayList.get(position).getEmail());
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbManager db = new dbManager(context);
+                db.deleteData(modelArrayList.get(position).getName());
+                notifyItemRemoved(position);
+                Toast.makeText(context,"Contact deleted",Toast.LENGTH_LONG).show();
 
-
+            }
+        });
     }
 
     @Override
@@ -56,6 +68,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.myviewHolder> {
             dname = itemView.findViewById(R.id.displayname);
             dcontact = itemView.findViewById(R.id.displaycontact);
             demail = itemView.findViewById(R.id.displayemail);
+            delete = itemView.findViewById(R.id.deleteButton);
 
         }
     }

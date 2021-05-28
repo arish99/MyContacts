@@ -53,6 +53,12 @@ public class dbManager extends SQLiteOpenHelper {
 
 
     }
+    public void deleteData(String name)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("tbl_contact", "name=?", new String[]{name});
+        db.close();
+    }
 
 
 }
